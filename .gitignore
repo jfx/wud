@@ -1,0 +1,10 @@
+/.project
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+tests/RF/*.log
+*.log
+log.html
+report.html
+output.xml

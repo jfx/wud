@@ -1,0 +1,45 @@
+{
+  "name": "wud.sh",
+  "version": "0.0.0-semantic-release",
+  "description": "Waits for a deployment to complete",
+  "engines": {
+    "node": ">=9.0",
+    "yarn": ">=1.5"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^7.0.2",
+    "@semantic-release/github": "^5.0.2",
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "semantic-release": "^15.9.9"
+  },
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "release": {
+    "verifyConditions": [
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "publish": [
+      {
+        "path": "@semantic-release/github"
+      }
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfx/wud.git"
+  },
+  "author": "FX Soubirou",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jfx/wud/issues"
+  },
+  "homepage": "https://github.com/jfx/wud#readme"
+}
