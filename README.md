@@ -1,6 +1,6 @@
 # wud.sh : Wait Until Deployment !
 
-wud.sh is a bash program to easily waits for a deployment to complete.
+wud.sh is a bash program to wait for a deployment to complete.
 
 ## Usage
 

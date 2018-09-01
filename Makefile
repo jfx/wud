@@ -1,5 +1,6 @@
 
 DOCKER = docker
+ROBOT  = robot
 YARN   = yarn
 
 
@@ -36,9 +37,13 @@ commit:
 check: ## Check script with ShellCheck
 check:
 	$(DOCKER) pull koalaman/shellcheck:stable
-	$(DOCKER) run -v "$PWD:/mnt" koalaman/shellcheck wud.sh
+	$(DOCKER) run -v "${PWD}:/mnt" koalaman/shellcheck wud.sh
 
-.PHONY: check
+test: ## Run Robot Framework tests
+test:
+	$(ROBOT) tests
+
+.PHONY: check test
 
 .DEFAULT_GOAL := help
 help:
