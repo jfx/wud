@@ -39,11 +39,11 @@ check:
 	$(DOCKER) pull koalaman/shellcheck:stable
 	$(DOCKER) run -v "${PWD}:/mnt" koalaman/shellcheck wud.sh
 
-test: ## Run Robot Framework tests
-test:
-	$(ROBOT) tests
+rf-tests: ## Run Robot Framework tests
+rf-tests:
+	$(ROBOT) tests/RF
 
-.PHONY: check test
+.PHONY: check rf-tests
 
 .DEFAULT_GOAL := help
 help:

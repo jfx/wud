@@ -18,28 +18,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 VERSION=__VERSION__
-DEFAULT_INITIAL_WAIT=30
-DEFAULT_INTERVAL=20
-DEFAULT_TIMEOUT=300
 
-function check_file() {
-  if [[ ! -f "$1" ]] ; then
-      echo "File \"$1\" does not exist, aborting."
-      exit 1
+DEFAULT_INITIAL_WAIT=30
+DEFAULT_INTERVAL=10
+DEFAULT_TIMEOUT=300
+DEFAULT_HTTP_CODE=200
+
+initial_wait=$DEFAULT_INITIAL_WAIT
+interval=$DEFAULT_INTERVAL
+timeout=$DEFAULT_TIMEOUT
+http_code=$DEFAULT_HTTP_CODE
+
+url=""
+
+function url_validation() {
+  if [ -z "$url" ] 
+  then 
+    echo "-u argument is mandatory !"
+    usage
+    exit 1
   fi
 }
 
-function init_count() {
-  count=$(grep -o "$MASK" "$1" | wc -l)
-  HIDDEN_COUNT=$count
-}
-
-function display_count() {
-  count=$(grep -o "$MASK" "$1" | wc -l)
-  delta=$((count - HIDDEN_COUNT))
-  echo "Hidden variables [$VARIABLE_INDEX]: $delta matches"
-  HIDDEN_COUNT=$count
-  (( VARIABLE_INDEX++ ))
+function check() {
+  if [[ "$(curl -s -o /dev/null -w %\{http_code\} ${url})" == "${http_code}" ]];
+  then
+    return 0
+  else
+    return 199
+  fi
 }
 
 function usage() {
@@ -58,17 +65,24 @@ function version() {
   echo "License GPLv3+ : GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>"
 }
 
-u_arg=0
-
-while getopts u:vh option
+while getopts hi:t:u:vw: option
 do
   case "${option}" in
-    u)
-      u_arg=1
-      ;;
     h)
       usage
       exit 0
+      ;;
+    i)
+      interval=${OPTARG}
+      ;;
+    t)
+      timeout=${OPTARG}
+      ;;
+    u)
+      url=${OPTARG}
+      ;;
+    w)
+      initial_wait=${OPTARG}
       ;;
     v)
       version
@@ -81,9 +95,16 @@ do
   esac
 done
 
-if [ $u_arg -eq 0 ] 
-then 
-  echo "u argument is mandatory !"
-  usage
-  exit 1
-fi 
+url_validation
+time_timeout=$(( $(date +%s) + timeout ))
+
+sleep "$initial_wait"
+
+check_status=$(check; echo $?)
+while [[ $check_status != 0 ]] && [[ $(date +%s) < $time_timeout ]]
+do 
+  sleep "$interval"
+  check_status=$(check; echo $?)
+done
+
+exit "$check_status"
