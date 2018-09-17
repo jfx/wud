@@ -1,0 +1,38 @@
+dist: trusty
+sudo: required
+
+jobs:
+  include:
+
+    - stage: "Schell check"
+      services:
+        - docker
+      before_install:
+        - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        - sudo apt-get update && sudo apt-get -y install docker-ce
+      script:
+        - make check
+
+    - stage: "Robot Framework tests"
+      language: python
+      python: 3.5
+      install:
+        - pip install -r tests/RF/requirements.txt
+      script:
+        - make rf-tests
+
+    - stage: "Release"
+      language: node_js
+      node_js: 9
+      before_install:
+        - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+        - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+        - sudo apt-get update -qq && sudo apt-get install -y -qq yarn
+        - sudo rm /usr/local/bin/yarn
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release

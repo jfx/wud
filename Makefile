@@ -1,5 +1,6 @@
 
 DOCKER = docker
+ROBOT  = robot
 YARN   = yarn
 
 
@@ -36,9 +37,34 @@ commit:
 check: ## Check script with ShellCheck
 check:
 	$(DOCKER) pull koalaman/shellcheck:stable
-	$(DOCKER) run -v "$PWD:/mnt" koalaman/shellcheck wud.sh
+	$(DOCKER) run -v "${PWD}:/mnt" koalaman/shellcheck wud.sh
 
-.PHONY: check
+rf-tests: ## Run Robot Framework tests
+rf-tests:
+	$(ROBOT) tests/RF
+
+.PHONY: check rf-tests
+
+## Deploy
+## ------
+
+package: ## Package wud. Arguments: version=1.2.3
+package:
+	test -n "${version}"  # Fail if version parameter is not set
+	@mkdir -p dist
+	@cp -f wud.sh dist/wud.sh
+	@sed -i 's/__VERSION__/'"${version}"'/g' dist/wud.sh
+	@rm -f dist/wud-v${version}.tar.gz
+	@cd dist && tar -czf wud-v${version}.tar.gz wud.sh
+
+publish: ## Publish package. Arguments: version=1.2.3, user=john, token=34adf345
+publish:
+	test -n "${version}"  # Fail if version parameter is not set
+	test -n "${user}"  # Fail if user parameter is not set
+	test -n "${token}"  # Fail if token parameter is not set
+	@curl -T dist/wud-v${version}.tar.gz -u${user}:${token} https://api.bintray.com/content/jfx/wud/stable/${version}/wud-v${version}.tar.gz?publish=1
+  
+.PHONY: package publish
 
 .DEFAULT_GOAL := help
 help:
