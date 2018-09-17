@@ -20,7 +20,7 @@ jobs:
       install:
         - pip install -r tests/RF/requirements.txt
       script:
-        - make rf-test
+        - make rf-tests
 
     - stage: "Release"
       language: node_js
@@ -35,5 +35,4 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - nvm install lts/*
           - npx semantic-release
