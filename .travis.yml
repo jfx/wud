@@ -35,4 +35,5 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
+          - nvm install lts/*
           - npx semantic-release

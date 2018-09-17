@@ -21,9 +21,17 @@
       "@semantic-release/git",
       "@semantic-release/github"
     ],
-    "publish": [
+    "prepare": [
       {
-        "path": "@semantic-release/github"
+        "path": "@semantic-release/exec",
+        "cmd": "make package version=${nextRelease.version}"
+      }
+    ],
+    "publish": [
+      "@semantic-release/github",
+      {
+        "path": "@semantic-release/exec",
+        "cmd": "make publish version=${nextRelease.version} user=${BINTRAY_USER} token=${BINTRAY_TOKEN}"
       }
     ]
   },

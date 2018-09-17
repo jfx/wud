@@ -8,3 +8,4 @@ tests/RF/*.log
 log.html
 report.html
 output.xml
+/dist/
