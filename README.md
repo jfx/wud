@@ -1,8 +1,8 @@
-# wud.sh : Wait Until Deployment !
+# wud : Wait Until Deployment !
 [![Software License](https://img.shields.io/badge/license-GPL%20v3-green.svg?style=flat)](LICENSE)
 
-[master:](https://github.com/jfx/wud.sh "Branch master") [![Build Status](https://travis-ci.org/jfx/wud.sh.svg?branch=master)](https://travis-ci.org/jfx/wud.sh)
-[develop:](https://github.com/jfx/wud.sh/tree/develop "Branch develop") [![Build Status](https://travis-ci.org/jfx/wud.sh.svg?branch=develop)](https://travis-ci.org/jfx/wud.sh/branches)
+[master:](https://github.com/jfx/wud "Branch master") [![Build Status](https://travis-ci.org/jfx/wud.svg?branch=master)](https://travis-ci.org/jfx/wud)
+[develop:](https://github.com/jfx/wud/tree/develop "Branch develop") [![Build Status](https://travis-ci.org/jfx/wud.svg?branch=develop)](https://travis-ci.org/jfx/wud/branches)
 
 wud.sh is a bash program to wait for a deployment to complete.
 

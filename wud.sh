@@ -82,7 +82,7 @@ do
       exit 0
       ;;
     i)
-      integer_validation "-i" ${OPTARG}
+      integer_validation "-i" "${OPTARG}"
       interval=${OPTARG}
       ;;
     t)
