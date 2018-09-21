@@ -30,6 +30,11 @@ Wrong usage: [-u] argument not set
     Then Should Be Equal As Integers    ${rc}    1
     And Should Contain    ${output}    u argument is mandatory
 
+Wrong usage: [-i] argument should be an integer
+    ${rc}    ${output} =    When Run and Return RC and Output    ${WUD.SH} -i X
+    Then Should Be Equal As Integers    ${rc}    1
+    And Should Contain    ${output}    Error: -i argument should be an integer
+
 Successfull usage with no options
     ${start} =    Get Current Date
     ${low_limit} =    Add Time To Date    ${start}    29s

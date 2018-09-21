@@ -57,12 +57,12 @@ package:
 	@rm -f dist/wud-v${version}.tar.gz
 	@cd dist && tar -czf wud-v${version}.tar.gz wud.sh
 
-publish: ## Publish package. Arguments: version=1.2.3, user=john, token=34adf345
+publish: ## Publish package. Environment variables: BINTRAY_USER, BINTRAY_TOKEN  Arguments: version=1.2.3
 publish:
 	test -n "${version}"  # Fail if version parameter is not set
-	test -n "${user}"  # Fail if user parameter is not set
-	test -n "${token}"  # Fail if token parameter is not set
-	@curl -T dist/wud-v${version}.tar.gz -u${user}:${token} https://api.bintray.com/content/jfx/wud/stable/${version}/wud-v${version}.tar.gz?publish=1
+	test -n "${BINTRAY_USER}"  # Fail if user parameter is not set
+	test -n "${BINTRAY_TOKEN}"  # Fail if token parameter is not set
+	@curl -T dist/wud-v${version}.tar.gz -u${BINTRAY_USER}:${BINTRAY_TOKEN} https://api.bintray.com/content/jfx/wud/stable/${version}/wud-v${version}.tar.gz?publish=1
   
 .PHONY: package publish
 

@@ -34,8 +34,17 @@ url=""
 function url_validation() {
   if [ -z "$url" ] 
   then 
-    echo "-u argument is mandatory !"
+    echo "-u argument is mandatory !" >&2;
     usage
+    exit 1
+  fi
+}
+
+function integer_validation() {
+  re='^[0-9]+$'
+  if ! [[ $2 =~ $re ]];
+  then
+    echo "Error: $1 argument should be an integer" >&2;
     exit 1
   fi
 }
@@ -73,6 +82,7 @@ do
       exit 0
       ;;
     i)
+      integer_validation "-i" ${OPTARG}
       interval=${OPTARG}
       ;;
     t)

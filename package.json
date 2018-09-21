@@ -32,7 +32,7 @@
       "@semantic-release/github",
       {
         "path": "@semantic-release/exec",
-        "cmd": "make publish version=${nextRelease.version} user=${BINTRAY_USER} token=${BINTRAY_TOKEN}"
+        "cmd": "make publish version=${nextRelease.version}"
       }
     ]
   },
