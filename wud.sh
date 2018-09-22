@@ -93,6 +93,7 @@ do
       url=${OPTARG}
       ;;
     w)
+      integer_validation "-w" "${OPTARG}"
       initial_wait=${OPTARG}
       ;;
     v)

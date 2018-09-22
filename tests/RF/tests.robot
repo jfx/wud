@@ -40,6 +40,11 @@ Wrong usage: [-t] argument should be an integer
     Then Should Be Equal As Integers    ${rc}    1
     And Should Contain    ${output}    Error: -t argument should be an integer
 
+Wrong usage: [-w] argument should be an integer
+    ${rc}    ${output} =    When Run and Return RC and Output    ${WUD.SH} -w X
+    Then Should Be Equal As Integers    ${rc}    1
+    And Should Contain    ${output}    Error: -w argument should be an integer
+
 Successfull usage with no options
     ${start} =    Get Current Date
     ${low_limit} =    Add Time To Date    ${start}    29s

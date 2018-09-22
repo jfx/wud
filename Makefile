@@ -54,8 +54,8 @@ package:
 	@mkdir -p dist
 	@cp -f wud.sh dist/wud.sh
 	@sed -i 's/__VERSION__/'"${version}"'/g' dist/wud.sh
-	@rm -f dist/wud.sh-v${version}.tar.gz
-	@cd dist && tar -czf wud.sh-v${version}.tar.gz wud.sh
+	@rm -f dist/wud-sh.tar.gz
+	@cd dist && tar -czf wud-sh.tar.gz wud.sh
 
 .PHONY: package publish
 
