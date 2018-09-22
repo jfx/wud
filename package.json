@@ -29,10 +29,11 @@
       }
     ],
     "publish": [
-      "@semantic-release/github",
       {
-        "path": "@semantic-release/exec",
-        "cmd": "make publish version=${nextRelease.version}"
+        "path": "@semantic-release/github",
+        "assets": [
+          {"path": "dist/wud.sh-v${nextRelease.version}.tar.gz", "label": "Shell version of WUD"}
+        ]
       }
     ]
   },

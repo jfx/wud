@@ -86,6 +86,7 @@ do
       interval=${OPTARG}
       ;;
     t)
+      integer_validation "-t" "${OPTARG}"
       timeout=${OPTARG}
       ;;
     u)
